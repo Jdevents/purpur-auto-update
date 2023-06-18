@@ -1,2 +1,2 @@
 # purpur-download
-A scripted to automaticly update minecraft servers running purpur
+A shell scripted to automaticly update minecraft servers running purpur
