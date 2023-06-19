@@ -1,7 +1,7 @@
 #!/bin/sh
 service_name="mc-fish"
 WORK_DIR="/home/mc"
-PURUR_BACKUP="/home/mc/purpur-builds"
+PURPUR_BACKUP="/home/mc/purpur-builds"
 MCRCON="/home/mc/mcrcon"
 
 #Gets current minecraft version from official site
@@ -14,7 +14,7 @@ VERSION=${MCRELEASE} #1.19.4
 BUILD=latest
 cd ${WORK_DIR}
 sleep 0.5
-DOWN=$(cat ${PURUR_BACKUP}/build-list.txt)
+DOWN=$(cat ${PURPUR_BACKUP}/build-list.txt)
 
 #extract version file from current server.jar
 sudo jar -xvf /opt/minecraft/server/server.jar version.json
@@ -55,17 +55,20 @@ UpdateMc () {
         echo -e "Service not running startting update!"
     fi
 	echo  "-----------------------------------------[Downloading File]----------------------------------------"
-	sleep 0.5
-	curl -s https://api.purpurmc.org/v2/purpur/${VERSION} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n" > ${PURUR_BACKUP}/build-list.txt
-
+	sleep 15
+	if [-d ${PURPUR_BACKUP}]; then
+		curl -s https://api.purpurmc.org/v2/purpur/${VERSION} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n" > ${PURPUR_BACKUP}/build-list.txt
+	else
+		mkdir ${PURPUR_BACKUP}
+		curl -s https://api.purpurmc.org/v2/purpur/${VERSION} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n" > ${PURPUR_BACKUP}/build-list.txt
 	wget -P /tmp/purpur/ https://api.purpurmc.org/v2/purpur/${VERSION}/${BUILD}/download --content-disposition
 
 	cd /tmp/purpur
-	if [ -d "$PURUR_BACKUP" ]; then
-		cp purpur-${VERSION}-${PURPUR_CURRENT}.jar ${PURUR_BACKUP}/purpur-${VERSION}-${PURPUR_CURRENT}.jar
+	if [ -d "$PURPUR_BACKUP" ]; then
+		cp purpur-${VERSION}-${PURPUR_CURRENT}.jar ${PURPUR_BACKUP}/purpur-${VERSION}-${PURPUR_CURRENT}.jar
 	else
-		mkdir ${PURUR_BACKUP}
-		cp purpur-${VERSION}-${PURPUR_CURRENT}.jar ${PURUR_BACKUP}/purpur-${VERSION}-${PURPUR_CURRENT}.jar
+		mkdir ${PURPUR_BACKUP}
+		cp purpur-${VERSION}-${PURPUR_CURRENT}.jar ${PURPUR_BACKUP}/purpur-${VERSION}-${PURPUR_CURRENT}.jar
 	fi
 	mv purpur-${VERSION}-${PURPUR_CURRENT}.jar server.jar
 	#run as root
