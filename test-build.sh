@@ -23,15 +23,19 @@ RUNNING=$(jq -r '.id' version.json | sed 's/[a-z]//g' | tr -d ':",')
 
 McLocalBuild () {
     clear
-    echo "---------------------------------------[Minecraft official Information]---------------------------------------"
+    echo "---[Minecraft official Information]---"
     echo "Latest Minecraft Version: ${MCRELEASE}"
     echo "Latest Minecraft Snapshot Version: ${MCSNAPSHOT}"
     echo "Current Running Minecraft Version: ${RUNNING}"
-    echo "-----------------------------------------[Purpur official Information]----------------------------------------"
+    echo "---[Purpur official Information]---"
     echo "Current Set Purpur Version: ${VERSION}"
     echo "Purpur Build To Download: ${PURPUR-CURRENT}"
     echo "Set Build Branch: ${BUILD}"
+	#removes the extracted version file from the server file
     sudo rm version.json
+	echo "---[Local Build Information]---"
+    echo "Local Purpur Build: ${DOWN}"
+    echo "Remote Purpur Build: ${CURRENT}"
 }
 
 UpdateMc () {
@@ -72,11 +76,9 @@ UpdateMc () {
 	sudo systemctl start mc-fish
 }
 
-
 if [ ${CURRENT} != ${DOWN} ]; then
     UpdateMc
 else
-    echo "Local Purpur Build: ${DOWN}"
-    echo "Remote Purpur Build: ${CURRENT}"
+	echo "No New Update :)"
 fi
 exit
