@@ -32,16 +32,16 @@ McLocalBuild () {
     echo "Current Set Purpur Version: ${VERSION}"
     echo "Purpur Build To Download: ${PURPUR_CURRENT}"
     echo "Set Build Branch: ${BUILD}"
-	#removes the extracted version file from the server file
+    #removes the extracted version file from the server file
     sudo rm version.json
-	echo "---[Local Build Information]---"
+    echo "---[Local Build Information]---"
     echo "Local Purpur Build: ${DOWN}"
     echo "Remote Purpur Build: ${PURPUR_CURRENT}"
 }
 
 UpdateMc () {
 	echo  "--- Purpur Update Found ----"    
-    echo  "Old Purpur Build: ${DOWN}"
+        echo  "Old Purpur Build: ${DOWN}"
 	echo  "New Purpur Build: ${PURPUR_CURRENT}"
 	echo  "----------------------------"
 	echo  "Update needed!"
@@ -87,7 +87,7 @@ McLocalBuild
 if [ ${PURPUR_CURRENT} != ${DOWN} ]; then
     UpdateMc
 else
-	echo "                "
-	echo "No New Update :)"
+    echo "                "
+    echo "No New Update :)"
 fi
 exit
