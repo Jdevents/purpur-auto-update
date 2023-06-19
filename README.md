@@ -21,7 +21,7 @@ or you can clone the repo doing
 
 `git clone https://github.com/Jdevents/purpur-auto-update.git`
 
-Once you have the .sh file make sure you run `sudo chmod 777 path/to/file/purpur-update.sh` so it has the right permissions
+Once you have the .sh file make sure you run `sudo chmod 777 path/to/purpur-update.sh` so it has the right permissions
 
 ## Configuration
 
