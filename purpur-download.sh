@@ -81,6 +81,7 @@ McLocalBuild
 if [ ${PURPUR_CURRENT} != ${DOWN} ]; then
     UpdateMc
 else
+	echo "                "
 	echo "No New Update :)"
 fi
 exit
