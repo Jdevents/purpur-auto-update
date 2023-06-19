@@ -31,6 +31,14 @@ You also need to change some variables which are the following
 |Service Name Again| On line **52** and **76** you need to change the service name that is currently there to match yours|
 |Current Running version| On line **20** you will see a sudo command `sudo jar -xvf /opt/minecraft/server/server.jar version.json` change the location of the server.jar to match where your server.jar file lives!!|
 
+In my setup I have the update running in the root crontab like so
+
+```
+@reboot /bin/bash /home/mc/purpur-download.sh
+0 0 * * 0-6 /bin/bash /home/mc/purpur-download.sh
+```
+
+so that on reboot the updater runs and very day at midnight the updater also runs as well
 
 ## What does everything do?
 
