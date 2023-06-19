@@ -12,6 +12,14 @@ This shell scripted asumes you have followed or have something similar to this [
 
 You will also need to have a currently running minecraft server using purpur for things just to make your life easier. You can go [here](https://purpurmc.org/) to get the lates purpur build.
 
+To install you can either do the following
+
+`wget https://raw.githubusercontent.com/Jdevents/purpur-auto-update/main/purpur-update.sh`
+
+or you can clone the repo doing
+
+`git clone https://github.com/Jdevents/purpur-auto-update.git`
+
 ## Configuration
 
 In the shell scripted I need you to change the following to match your setup
@@ -93,9 +101,9 @@ McLocalBuild () {
     echo "Current Set Purpur Version: ${VERSION}"
     echo "Purpur Build To Download: ${PURPUR_CURRENT}"
     echo "Set Build Branch: ${BUILD}"
-	#removes the extracted version file from the server file
+    #removes the extracted version file from the server file
     sudo rm version.json
-	  echo "---[Local Build Information]---"
+    echo "---[Local Build Information]---"
     echo "Local Purpur Build: ${DOWN}"
     echo "Remote Purpur Build: ${PURPUR_CURRENT}"
 }
@@ -122,7 +130,7 @@ After all of that we have the update area
 ```shell scripted
 UpdateMc () {
 	echo  "--- Purpur Update Found ----"    
-  echo  "Old Purpur Build: ${DOWN}"
+        echo  "Old Purpur Build: ${DOWN}"
 	echo  "New Purpur Build: ${PURPUR_CURRENT}"
 	echo  "----------------------------"
 	echo  "Update needed!"
@@ -142,7 +150,7 @@ UpdateMc () {
 	else
 		mkdir ${PURPUR_BACKUP}
 		curl -s https://api.purpurmc.org/v2/purpur/${VERSION} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n" > ${PURPUR_BACKUP}/build-list.txt
-  fi
+        fi
 	wget -P /tmp/purpur/ https://api.purpurmc.org/v2/purpur/${VERSION}/${BUILD}/download --content-disposition
 
 	cd /tmp/purpur
@@ -154,6 +162,7 @@ UpdateMc () {
 	fi
 	mv purpur-${VERSION}-${PURPUR_CURRENT}.jar server.jar
 	#run as root
+ 	sudo rm /opt/minecraft/server/server.jar
 	sudo mv server.jar /opt/minecraft/server
 	echo  "  "
 	echo  "Server file moved to /opt/minecraft/server"
@@ -166,7 +175,7 @@ UpdateMc () {
 The first thing it does is echo's out the new update build number and the local build number as seen here:
 ```
 	echo  "--- Purpur Update Found ----"    
-  echo  "Old Purpur Build: ${DOWN}"
+        echo  "Old Purpur Build: ${DOWN}"
 	echo  "New Purpur Build: ${PURPUR_CURRENT}"
 	echo  "----------------------------"
 	echo  "Update needed!"
@@ -195,6 +204,7 @@ To get the download the following gets run
 	fi
 	mv purpur-${VERSION}-${PURPUR_CURRENT}.jar server.jar
 	#run as root
+        sudo rm /opt/minecraft/server/server.jar
 	sudo mv server.jar /opt/minecraft/server
 	echo  "  "
 	echo  "Server file moved to /opt/minecraft/server"
@@ -226,8 +236,8 @@ McLocalBuild
 if [ ${PURPUR_CURRENT} != ${DOWN} ]; then
     UpdateMc
 else
-	echo "                "
-	echo "No New Update :)"
+    echo "                "
+    echo "No New Update :)"
 fi
 exit
 ```
