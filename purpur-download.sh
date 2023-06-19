@@ -61,6 +61,7 @@ UpdateMc () {
 	else
 		mkdir ${PURPUR_BACKUP}
 		curl -s https://api.purpurmc.org/v2/purpur/${VERSION} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n" > ${PURPUR_BACKUP}/build-list.txt
+	fi
 	wget -P /tmp/purpur/ https://api.purpurmc.org/v2/purpur/${VERSION}/${BUILD}/download --content-disposition
 
 	cd /tmp/purpur
