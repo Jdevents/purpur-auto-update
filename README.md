@@ -10,7 +10,8 @@ A shell scripted to automaticly update minecraft servers running purpur. I made 
 
 This shell scripted asumes you have followed or have something similar to this [guid](https://www.shells.com/l/en-US/tutorial/0-A-Guide-to-Installing-a-Minecraft-Server-on-Linux-Ubuntu)
 
-You will also need to have a currently running minecraft server using purpur for things just to make your life easier. You can go [here](https://purpurmc.org/) to get the lates purpur build.
+You will also need to have a currently running minecraft server using purpur just to make your life easier. You can go [here](https://purpurmc.org/) to get the lates purpur build.
+I have no clue if you can just start off with the normal minecraft server.jar file, I don't see why you couldn't but just to be safe start with a purpur build
 
 To install you can either do the following
 
