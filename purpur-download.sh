@@ -2,6 +2,7 @@
 service_name="mc-fish"
 WORK_DIR="/home/mc"
 PURUR_BACKUP="/home/mc/purpur-builds"
+MCRCON="/home/mc/mcrcon"
 
 #Gets current minecraft version from official site
 MCRELEASE=$(curl -s https://launchermeta.mojang.com/mc/game/version_manifest.json | jq '.latest' | grep 'release' | sed 's/[a-z]//g' | tr -d ':", ')
@@ -47,7 +48,7 @@ UpdateMc () {
 	echo  "----------------------------"
     if systemctl is-active --quiet "$service_name.service" ; then
 	    echo  "Service is running stopping service! Updating server jar file please wait 5 mins"
-	    /home/mc/mcrcon/mcrcon -H 127.0.0.1 -P 25575 -p rconpassword "say mc server stopping in 15 seconds to update! Join back in 5-10 mins", "save-all"
+	    ${MCRCON}/mcrcon -H 127.0.0.1 -P 25575 -p rconpassword "say mc server stopping in 15 seconds to update! Join back in 5-10 mins", "save-all"
 	    sleep 15
 	    sudo systemctl stop mc-fish
     else
