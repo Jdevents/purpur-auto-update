@@ -69,6 +69,7 @@ UpdateMc () {
 	fi
 	mv purpur-${VERSION}-${PURPUR_CURRENT}.jar server.jar
 	#run as root
+	sudo rm /opt/minecraft/server/server.jar
 	sudo mv server.jar /opt/minecraft/server
 	echo  "  "
 	echo  "Server file moved to /opt/minecraft/server"
