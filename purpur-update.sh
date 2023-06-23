@@ -7,7 +7,7 @@ MCRCON="/home/mc/mcrcon"
 #Gets current minecraft version from official site
 MCRELEASE=$(curl -s https://launchermeta.mojang.com/mc/game/version_manifest.json | jq '.latest' | grep 'release' | sed 's/[a-z]//g' | tr -d ':", ')
 #Gets the lates purpur build
-PURPUR_CURRENT=$(curl -s https://api.purpurmc.org/v2/purpur/${MCRELEASE} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n")
+PURPUR_CURRENT=$(curl -s https://api.purpurmc.org/v2/purpur/${MCRELEASE} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "0-9\n")
 #Gets the current minecraft snapshot
 MCSNAPSHOT=$(curl -s https://launchermeta.mojang.com/mc/game/version_manifest.json | jq '.latest' | grep -e 'snapshot' | sed 's/snapshot//g' |tr -d ':", ')
 VERSION=${MCRELEASE} #1.19.4
@@ -34,6 +34,7 @@ McLocalBuild () {
     echo "Set Build Branch: ${BUILD}"
     #removes the extracted version file from the server file
     sudo rm version.json
+    sudo rm /opt/minecraft/server/server.jar    
     echo "---[Local Build Information]---"
     echo "Local Purpur Build: ${DOWN}"
     echo "Remote Purpur Build: ${PURPUR_CURRENT}"
@@ -52,11 +53,11 @@ UpdateMc () {
 	    sleep 15
 	    sudo systemctl stop mc-fish
     else
-        echo -e "Service not running startting update!"
+        echo "Service not running startting update!"
     fi
 	echo  "-----------------------------------------[Downloading File]----------------------------------------"
 	sleep 15
-	if [-d ${PURPUR_BACKUP}]; then
+	if [ -d ${PURPUR_BACKUP}]; then
 		curl -s https://api.purpurmc.org/v2/purpur/${VERSION} | jq '.' | grep -e 'latest' |cut -d ' ' -f 3,6 | tr -d ',' | tr -dc "1-9\n" > ${PURPUR_BACKUP}/build-list.txt
 	else
 		mkdir ${PURPUR_BACKUP}
@@ -73,7 +74,6 @@ UpdateMc () {
 	fi
 	mv purpur-${VERSION}-${PURPUR_CURRENT}.jar server.jar
 	#run as root
-	sudo rm /opt/minecraft/server/server.jar
 	sudo mv server.jar /opt/minecraft/server
 	echo  "  "
 	echo  "Server file moved to /opt/minecraft/server"
